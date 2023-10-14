@@ -1,0 +1,40 @@
+
+    <mjml>
+        <mj-head>
+            <!-- Meta: Useful for setting the viewport on mobile devices -->
+            <mj-meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            
+            
+        </mj-head>
+      <mj-body>
+      
+        <mj-section background-color="#f0f0f0">
+        <mj-column  width="600px">
+            <mj-text align="center" font-size="24px" font-weight="bold">
+            <h1>Notion To Self, Edition October 14, 2023</h1>
+            </mj-text>
+        </mj-column>
+        </mj-section>
+        <mj-section>
+          <mj-column width="600px">
+    <mj-text font-size="20px"><h2>Page title... - <a href="https://www.notion.so/Page-title-816720dfc22d44b686962ebad72ef806">Link to Page</a></h2></mj-text><mj-text><a href="https://twitter.com/autovisiongroup/status/1671880910915125253?s=12&t=L1wiCUNrO5Ld9nXa94g0fg">Link to Tweet</a></mj-text>
+          </mj-column>
+        </mj-section>
+        <mj-text font-size="20px"><h2>Fictiverse/Redream: Realtime Diffusion, using Automatic1111 Stable Diffusion API - <a href="https://www.notion.so/Fictiverse-Redream-Realtime-Diffusion-using-Automatic1111-Stable-Diffusion-API-ee1751d105ca46f9bd105a153820c3c6">Link to Page</a></h2></mj-text><mj-text font-size="25px"></mj-text><mj-text>(Kind of) Realtime Stable Diffusion from a screen area using <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">Automatic1111</a>'s API.</mj-text><mj-image src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c8e30660-6514-455b-9d9a-0a83e0bf3e75/237104783-92d5d1e8-8d14-443c-823a-56cfd632cf84.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20231014%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20231014T161647Z&X-Amz-Expires=3600&X-Amz-Signature=3966e2ac25726a2c62de02d9d770031b55566276fe5a0ef31e46184618310c13&X-Amz-SignedHeaders=host&x-id=GetObject" alt="Image"></mj-image><mj-text font-size="20px"></mj-text><mj-text>&bull; </mj-text><mj-text>&bull; </mj-text><mj-text>&bull; </mj-text><mj-text>&bull; </mj-text><mj-text>&bull; </mj-text><mj-text>Details</mj-text><mj-text font-size="20px"></mj-text><mj-text>&bull; </mj-text><mj-text>Starting with Redream :</mj-text><mj-image src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fd640b13-32cf-42fa-9a46-66c77dfde5d6/207682985-39ae0ce5-d2bf-4067-b136-5a2dd5fdaf6b.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20231014%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20231014T161647Z&X-Amz-Expires=3600&X-Amz-Signature=9d69c4047ec2250e686157a0dec15ff0be122af31e33187cb3e94b03ffe0c50e&X-Amz-SignedHeaders=host&x-id=GetObject" alt="Image"></mj-image><mj-text>&bull; </mj-text><mj-text>&bull; </mj-text><mj-text>&bull; </mj-text><mj-text>&bull; </mj-text><mj-text>Changing diffusion settings :</mj-text><mj-text>&bull; </mj-text><mj-text>&bull; </mj-text><mj-text>&bull; </mj-text><mj-text>&bull; </mj-text><mj-text>Saving presets :</mj-text><mj-text>&bull; </mj-text><mj-text>&bull; </mj-text><mj-text>&bull; </mj-text><mj-text>Prompt:</mj-text><mj-text>&bull; </mj-text><mj-text font-size="20px"></mj-text><mj-text><a href="https://www.paypal.com/donate/?hosted_button_id=MSXYHF2E7YXZG">Paypal</a></mj-text><mj-text><a href="https://discord.gg/UYgRnhj8PR">Discord</a> - <a href="https://twitter.com/Fictiverse">Twitter</a></mj-text>
+          </mj-column>
+        </mj-section>
+        <mj-text font-size="20px"><h2>proper place to store an object to be share among several pages · sveltejs/kit · Discussion #8599 - <a href="https://www.notion.so/proper-place-to-store-an-object-to-be-share-among-several-pages-sveltejs-kit-Discussion-8599-8fb84c8b89214c8d9ac261000b906662">Link to Page</a></h2></mj-text><mj-image src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/419f6bae-a3ee-426e-afa7-12b65ded4a60/8599?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20231014%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20231014T161647Z&X-Amz-Expires=3600&X-Amz-Signature=7bd982786b0e02f21619cf9181acb1e11823de8cde598ea0fb6e25d1b458d4f3&X-Amz-SignedHeaders=host&x-id=GetObject" alt="Image"></mj-image><mj-text>I'm in the process of building a websocket (WS) powered UI (multiplayer game). My app is made up of several views (using views here to avoid terms like page and component). Furthermore, each of those views should be able to send and receive messages via a persistent <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API">WebSocket</a> that is connected back to the game server when the app loads for the first time.</mj-text><mj-text>In Svelte, I would init my WS in my App component and either pass it around via props to child components or emit events from child to its parent and send messages via WS from App to the WS server. I believe I could even use the context API but haven't explore that option yet.</mj-text><mj-text>I would then conditionally render different components in App.svelte depending on the state of the app (or the view that needs to be shown to the user). As my app has 6 or 7 views, my conditional rendering code is getting hard to read so I thought I would give a try to Sveltekit to leverage its routing functionality + goto function to take the UI to the different views in my app.</mj-text><mj-text>In this setup, when I take user from / to view1 (via goto() ), I loose access to the client-side WS object that was connected to the server when the page first rendered on the browser.</mj-text><mj-text>I'm looking for a way to either store somewhere the WS object so that it's accessible when /view1 renders in the browser or to be able to emit some sort of event from the page backing my /view path but have not been able to find a way to do so.</mj-text><mj-text>Svelte context API and sveltekit stores are great for sharing state among components but sveltekit routes are backed by pages so I'm trying to to understand if I should stick to svelte for this use case or if I'm missing some feature that could help me here.</mj-text>
+          </mj-column>
+        </mj-section>
+        
+        <!-- Footer/Signature Section -->
+        <mj-section background-color="#f0f0f0">
+        <mj-column>
+            <mj-text font-size="14px" align="center">
+            Notion to Self
+            </mj-text>
+        </mj-column>
+        </mj-section>
+      </mj-body>
+    </mjml>
+    
