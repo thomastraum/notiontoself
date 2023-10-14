@@ -51,13 +51,38 @@ def responseDatabase(databaseID, headers):
 
 
 # Get all pages from a database
+# def get_all_pages_from_database(databaseID, headers):
+#     query_url = f"https://api.notion.com/v1/databases/{databaseID}/query"
+#     res = requests.post(query_url, headers=headers)
+#     if res.status_code == 200:
+#         return res.json().get("results", [])
+#     else:
+#         return []
+
+
 def get_all_pages_from_database(databaseID, headers):
     query_url = f"https://api.notion.com/v1/databases/{databaseID}/query"
-    res = requests.post(query_url, headers=headers)
-    if res.status_code == 200:
-        return res.json().get("results", [])
-    else:
-        return []
+    all_pages = []
+    next_cursor = None
+
+    while True:
+        payload = {}
+        if next_cursor:
+            payload["start_cursor"] = next_cursor
+
+        res = requests.post(query_url, headers=headers, json=payload)
+        if res.status_code == 200:
+            response_data = res.json()
+            all_pages.extend(response_data.get("results", []))
+
+            next_cursor = response_data.get("next_cursor")
+            if not next_cursor:
+                break  # Exit the loop if there are no more pages to fetch
+        else:
+            print(f"Failed to retrieve pages: {res.status_code}")
+            break  # Exit the loop if the request fails
+
+    return all_pages
 
 
 # Get three random pages from a database
@@ -346,11 +371,11 @@ def get_summary(all_html_content):
             messages=[
                 {
                     "role": "system",
-                    "content": "I want you to act as a helpful online article editor. Reply with concise, clean summaries that are less than 60 words. Use line breaks to divide the content nicely. Dont describe the HTML strucutre but use it to inform your response",
+                    "content": "I want you to act as a helpful assitant. Summarize the submitted texts in less than 60 words. do not describe the HTML tags. If the text submitted is short, simply return it with minimal formatting",
                 },
                 {
                     "role": "user",
-                    "content": f"Summarize the following in less than 60 words; please ignore the HTML tags. Dont describe the HTML structure. dont respond with markdown. :\n{all_html_content}",
+                    "content": f"Summarize the following in less than 60 words. do not describe the HTML tags. If the text submitted is short, simply return it without a summary:\n{all_html_content}",
                 },
             ],
         )
@@ -435,6 +460,7 @@ def send_newsletter(databaseID, headers):
     mjml_structure += build_mjml_structure(pages)
 
     mjml_structure += """
+        </mj-body>
         <!-- Footer/Signature Section -->
         <mj-section background-color="#f0f0f0">
         <mj-column>
