@@ -9,12 +9,17 @@ import requests, json
 import random
 import datetime
 import openai
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
 
 # mailjet code
 from mailjet_utils import send_email_via_mailjet
 
 
 load_dotenv()
+env = os.getenv("ENV")
 
 # Load tokens and DB IDs from .env
 token = os.getenv("NOTION_TOKEN")
@@ -87,26 +92,6 @@ def get_blocks_of_page(page_id, headers):
             break
 
     return blocks
-
-
-def format_pages_for_email(pages):
-    email_body = "<h1>Newsletter</h1>"
-    for page in pages:
-        title = (
-            page.get("properties", {})
-            .get("title", {})
-            .get("title", [{}])[0]
-            .get("plain_text", "")
-        )
-        # Assuming a 'content' property for simplicity
-        content = (
-            page.get("properties", {})
-            .get("content", {})
-            .get("rich_text", [{}])[0]
-            .get("plain_text", "")
-        )
-        email_body += f"<h2>{title}</h2><p>{content}</p>"
-    return email_body
 
 
 def notion_block_to_mjml(block):
@@ -338,6 +323,86 @@ def send_newsletter_mjml(databaseID, headers):
         mjml_file.write(mjml_structure)
 
 
+def get_summary(all_html_content):
+    # Summarize the HTML content using OpenAI 3.5 Turbo
+    # Get the OpenAI API key from the environment variables
+    summary = ""
+    openai_api_key = os.getenv("OPENAI_API_KEY")
+    if not openai_api_key:
+        raise ValueError("Missing OpenAI API key")
+
+    openai.api_key = openai_api_key
+    try:
+        logging.info(all_html_content)
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo-16k",
+            temperature=0.0,
+            top_p=1,
+            messages=[
+                {
+                    "role": "system",
+                    "content": "I want you to act as a helpful online article editor. Reply with concise, clean summaries that are less than 60 words. Use line breaks to divide the content nicely. Dont describe the HTML strucutre but use it to inform your response",
+                },
+                {
+                    "role": "user",
+                    "content": f"Summarize the following in less than 60 words; please ignore the HTML tags. Dont describe the HTML structure. dont respond with markdown. :\n{all_html_content}",
+                },
+            ],
+        )
+        summary = response["choices"][0]["message"]["content"].strip()
+    except Exception as e:
+        # print(f"Error: {e}")
+        logging.error(f"Error: {e}")
+        summary = "Summarization failed due to an error."
+
+    return summary
+
+
+def build_mjml_structure(pages):
+    mjml_structure = ""
+    for page in pages:
+        # Handle page-level elements here, like adding an mj-section per page
+        title = (
+            page.get("properties", {})
+            .get("Name", {})
+            .get("title", [{}])[0]
+            .get("plain_text", "")
+        )
+        notion_page_url = page.get("url", "")
+        mjml_structure += f'<mj-text font-size="20px"><h2>{title} - <a href="{notion_page_url}">Link to Page</a></h2></mj-text>'
+
+        blocks = get_blocks_of_page(page.get("id"), headers)
+        if len(blocks) <= 1:
+            for block in blocks:
+                # print(json.dumps(block, indent=4))
+                logging.info(json.dumps(block, indent=4))
+                mjml = notion_block_to_mjml(block)
+                mjml_structure += f"""
+                <mj-section>
+                <mj-column width="600px">
+                    <mj-text font-size="16px">{mjml}</mj-text>
+                </mj-column>
+                </mj-section>
+                """
+        else:
+            all_html_content = ""
+            for block in blocks:
+                html = notion_block_to_html(block)
+                all_html_content += html
+
+            summary = get_summary(all_html_content)
+
+            # Use the summarization in an MJML text tag
+            mjml_structure += f"""
+            <mj-section>
+            <mj-column width="600px">
+                <mj-text font-size="16px">{summary}</mj-text>
+            </mj-column>
+            </mj-section>
+            """
+    return mjml_structure
+
+
 def send_newsletter(databaseID, headers):
     # Get today's date in a formatted string, e.g., "October 14, 2023"
     today_date = datetime.datetime.today().strftime("%B %d, %Y")
@@ -362,73 +427,7 @@ def send_newsletter(databaseID, headers):
         </mj-column>
         </mj-section>
     """
-    for page in pages:
-        # Handle page-level elements here, like adding an mj-section per page
-        title = (
-            page.get("properties", {})
-            .get("Name", {})
-            .get("title", [{}])[0]
-            .get("plain_text", "")
-        )
-        notion_page_url = page.get("url", "")
-        mjml_structure += f'<mj-text font-size="20px"><h2>{title} - <a href="{notion_page_url}">Link to Page</a></h2></mj-text>'
-
-        blocks = get_blocks_of_page(page.get("id"), headers)
-        if len(blocks) <= 1:
-            for block in blocks:
-                print(json.dumps(block, indent=4))
-                mjml = notion_block_to_mjml(block)
-                mjml_structure += f"""
-                <mj-section>
-                <mj-column width="600px">
-                    <mj-text font-size="16px">{mjml}</mj-text>
-                </mj-column>
-                </mj-section>
-                """
-        else:
-            all_html_content = ""
-            for block in blocks:
-                html = notion_block_to_html(block)
-                all_html_content += html
-
-            # Summarize the HTML content using OpenAI 3.5 Turbo
-            # Get the OpenAI API key from the environment variables
-            openai_api_key = os.getenv("OPENAI_API_KEY")
-            if not openai_api_key:
-                raise ValueError("Missing OpenAI API key")
-
-            openai.api_key = openai_api_key
-            try:
-                print("html content")
-                print(all_html_content)
-                response = openai.ChatCompletion.create(
-                    model="gpt-3.5-turbo-16k",
-                    temperature=0.0,
-                    top_p=1,
-                    messages=[
-                        {
-                            "role": "system",
-                            "content": "I want you to act as a helpful online article editor. Reply with concise, clean summaries that are less than 60 words. Use line breaks to divide the content nicely. Dont describe the HTML strucutre but use it to inform your response",
-                        },
-                        {
-                            "role": "user",
-                            "content": f"Summarize the following in less than 60 words; please ignore the HTML tags. Dont describe the HTML structure. dont respond with markdown. :\n{all_html_content}",
-                        },
-                    ],
-                )
-                summary = response["choices"][0]["message"]["content"].strip()
-            except Exception as e:
-                print(f"Error: {e}")
-                summary = "Summarization failed due to an error."
-
-            # Use the summarization in an MJML text tag
-            mjml_structure += f"""
-            <mj-section>
-            <mj-column width="600px">
-                <mj-text font-size="16px">{summary}</mj-text>
-            </mj-column>
-            </mj-section>
-            """
+    mjml_structure += build_mjml_structure(pages)
 
     mjml_structure += """
         <!-- Footer/Signature Section -->
@@ -443,13 +442,15 @@ def send_newsletter(databaseID, headers):
     </mjml>
     """
 
-    print("sending email")
+    logging.info("Sending email")
+
     send_email_via_mailjet(mjml_structure, subject)
 
-    print("mjml_structure:")
-    # Save the MJML structure to a file
-    with open("newsletter.mjml", "w") as mjml_file:
-        mjml_file.write(mjml_structure)
+    if env == "dev":
+        print("mjml_structure:")
+        # Save the MJML structure to a file
+        with open("newsletter.mjml", "w") as mjml_file:
+            mjml_file.write(mjml_structure)
 
 
 send_newsletter(databaseID=databaseID, headers=headers)
