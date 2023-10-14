@@ -11,15 +11,20 @@ import datetime
 import openai
 import logging
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-
 # mailjet code
 from mailjet_utils import send_email_via_mailjet
 
 
 load_dotenv()
 env = os.getenv("ENV")
+
+
+# Configure logging
+if env == "dev":
+    logging.basicConfig(level=logging.INFO)
+else:
+    logging.basicConfig(level=logging.ERROR)
+
 
 # Load tokens and DB IDs from .env
 token = os.getenv("NOTION_TOKEN")
@@ -352,7 +357,7 @@ def get_summary(all_html_content):
         summary = response["choices"][0]["message"]["content"].strip()
     except Exception as e:
         # print(f"Error: {e}")
-        logging.error(f"Error: {e}")
+        logging.error(f"Error get_summary: {e}")
         summary = "Summarization failed due to an error."
 
     return summary
