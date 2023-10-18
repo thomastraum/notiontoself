@@ -1,0 +1,102 @@
+
+    <mjml>
+        <mj-head>
+            <!-- Meta: Useful for setting the viewport on mobile devices -->
+            <mj-meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            
+            
+        </mj-head>
+      <mj-body>
+      
+        <mj-section background-color="#f0f0f0">
+        <mj-column  width="600px">
+            <mj-text align="center" font-size="24px" font-weight="bold">
+            <h1>Notion To Self, Edition October 18, 2023</h1>
+            </mj-text>
+        </mj-column>
+        </mj-section>
+    <mj-text font-size="20px"><h2>Newsletter with affiliate links - <a href="https://www.notion.so/Newsletter-with-affiliate-links-d61765419eb248668ea182e09cbfe2ee">Link to Page</a></h2></mj-text>
+                <mj-section>
+                <mj-column width="600px">
+                    <mj-text font-size="16px"><mj-text>simple cool product newsletter with a few friends. </mj-text></mj-text>
+                </mj-column>
+                </mj-section>
+                
+                <mj-section>
+                <mj-column width="600px">
+                    <mj-text font-size="16px"><mj-text>charge for affiliate links</mj-text></mj-text>
+                </mj-column>
+                </mj-section>
+                
+                <mj-section>
+                <mj-column width="600px">
+                    <mj-text font-size="16px"><mj-text>curation content versus selection</mj-text></mj-text>
+                </mj-column>
+                </mj-section>
+                
+                <mj-section>
+                <mj-column width="600px">
+                    <mj-text font-size="16px"><mj-text></mj-text></mj-text>
+                </mj-column>
+                </mj-section>
+                <mj-text font-size="20px"><h2>speed - <a href="https://www.notion.so/speed-5f240bc9d517416b9bfd3da01fe3cbcc">Link to Page</a></h2></mj-text>
+                <mj-section>
+                <mj-column width="600px">
+                    <mj-text font-size="16px"><mj-text font-style="italic">They realized that if search is fast, you’re more likely to search. The reason is that it encourages you to try stuff, get feedback, and try again.</mj-text></mj-text>
+                </mj-column>
+                </mj-section>
+                
+                <mj-section>
+                <mj-column width="600px">
+                    <mj-text font-size="16px"><mj-text></mj-text></mj-text>
+                </mj-column>
+                </mj-section>
+                
+                <mj-section>
+                <mj-column width="600px">
+                    <mj-text font-size="16px"><mj-text>doing things fast encourgages you to do more. </mj-text></mj-text>
+                </mj-column>
+                </mj-section>
+                
+                <mj-section>
+                <mj-column width="600px">
+                    <mj-text font-size="16px"><mj-text></mj-text></mj-text>
+                </mj-column>
+                </mj-section>
+                
+                <mj-section>
+                <mj-column width="600px">
+                    <mj-text font-size="16px"><mj-text font-style="italic">The general rule seems to be: systems which eat items quickly are fed more items. Slow systems starve.</mj-text></mj-text>
+                </mj-column>
+                </mj-section>
+                <mj-text font-size="20px"><h2>Step - <a href="https://www.notion.so/Step-411ead4b3e4a409c80ec3f989c358492">Link to Page</a></h2></mj-text>
+                <mj-section>
+                <mj-column width="600px">
+                    <mj-text font-size="16px"><mj-text>whats the first action</mj-text></mj-text>
+                </mj-column>
+                </mj-section>
+                
+                <mj-section>
+                <mj-column width="600px">
+                    <mj-text font-size="16px"><mj-text font-style="italic">STEP</mj-text></mj-text>
+                </mj-column>
+                </mj-section>
+                
+                <mj-section>
+                <mj-column width="600px">
+                    <mj-text font-size="16px"><mj-text></mj-text></mj-text>
+                </mj-column>
+                </mj-section>
+                
+        </mj-body>
+        <!-- Footer/Signature Section -->
+        <mj-section background-color="#f0f0f0">
+        <mj-column>
+            <mj-text font-size="14px" align="center">
+            Notion to Self
+            </mj-text>
+        </mj-column>
+        </mj-section>
+      </mj-body>
+    </mjml>
+    

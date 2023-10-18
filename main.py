@@ -13,7 +13,7 @@ import logging
 
 # mailjet code
 from mailjet_utils import send_email_via_mailjet
-
+from notion_helpers import notion_block_to_mjml, notion_block_to_html
 
 load_dotenv()
 env = os.getenv("ENV")
@@ -21,7 +21,8 @@ env = os.getenv("ENV")
 
 # Configure logging
 if env == "dev":
-    logging.basicConfig(level=logging.INFO)
+    # logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(filename='app.log', filemode='a', format='%(asctime)s - %(message)s', level=logging.INFO)
 else:
     logging.basicConfig(level=logging.ERROR)
 
@@ -124,161 +125,6 @@ def get_blocks_of_page(page_id, headers):
     return blocks
 
 
-def notion_block_to_mjml(block):
-    block_type = block.get("type")
-    mjml_content = ""
-
-    if block_type == "paragraph":
-        rich_text_objects = block.get("paragraph", {}).get("rich_text", [])
-        paragraph_text = ""
-        for rich_text_object in rich_text_objects:
-            text_content = rich_text_object.get("plain_text", "")
-            link_data = rich_text_object.get("text", {}).get("link", {})
-            link_url = link_data.get("url", None) if link_data is not None else None
-            if link_url:
-                paragraph_text += f'<a href="{link_url}">{text_content}</a>'
-            else:
-                paragraph_text += text_content
-        mjml_content += f"<mj-text>{paragraph_text}</mj-text>"
-
-    elif block_type == "embed":
-        embed_url = block.get("embed", {}).get("url")
-
-        # Determine the source of the embed and format the link text accordingly
-        if "twitter.com" in embed_url:
-            link_text = "Link to Tweet"
-        elif "youtube.com" in embed_url or "youtu.be" in embed_url:
-            link_text = "Link to Video"
-        else:
-            link_text = embed_url
-
-        mjml_content += f'<mj-text><a href="{embed_url}">{link_text}</a></mj-text>'
-
-    elif block_type == "image":
-        image_url = block.get("image", {}).get("file", {}).get("url")
-        mjml_content += f'<mj-image src="{image_url}" alt="Image"></mj-image>'
-
-    elif block_type == "code":
-        code_content = block.get("code", {}).get("text", {}).get("content", "")
-        mjml_content += f"<mj-raw><pre><code>{code_content}</code></pre></mj-raw>"
-
-    elif block_type == "bookmark":
-        url = block.get("bookmark", {}).get("url", "")
-        title = block.get("bookmark", {}).get("title", {}).get("content", "")
-        mjml_content += f'<mj-button href="{url}">{title}</mj-button>'
-
-    elif block_type in ["bulleted_list_item", "numbered_list_item"]:
-        text_content = block.get(block_type, {}).get("text", {}).get("content", "")
-        mjml_content += f"<mj-text>&bull; {text_content}</mj-text>"
-
-    elif block_type == "to_do":
-        text_content = block.get("to_do", {}).get("text", {}).get("content", "")
-        mjml_content += f"<mj-text>To Do: {text_content}</mj-text>"
-
-    elif block_type == "toggle":
-        text_content = block.get("toggle", {}).get("text", {}).get("content", "")
-        mjml_content += f"<mj-text>{text_content}</mj-text>"
-
-    elif block_type in ["heading_1", "heading_2", "heading_3"]:
-        level = block_type[-1]
-        text_content = block.get(block_type, {}).get("text", {}).get("content", "")
-        mjml_content += (
-            f'<mj-text font-size="{30 - int(level)*5}px">{text_content}</mj-text>'
-        )
-
-    elif block_type == "quote":
-        text_content = block.get("quote", {}).get("text", {}).get("content", "")
-        mjml_content += f'<mj-text font-style="italic">{text_content}</mj-text>'
-
-    elif block_type == "divider":
-        mjml_content += "<mj-divider />"
-
-    elif block_type == "callout":
-        text_content = block.get("callout", {}).get("text", {}).get("content", "")
-        mjml_content += f'<mj-text background-color="#e0e0e0">{text_content}</mj-text>'
-
-    elif block_type == "link_preview":
-        url = block.get("link_preview", {}).get("url", "")
-        mjml_content += f'<mj-button href="{url}">Link Preview</mj-button>'
-
-    return mjml_content
-
-
-def notion_block_to_html(block):
-    block_type = block.get("type")
-    html_content = ""
-
-    if block_type == "paragraph":
-        rich_text_objects = block.get("paragraph", {}).get("rich_text", [])
-        paragraph_text = ""
-        for rich_text_object in rich_text_objects:
-            text_content = rich_text_object.get("plain_text", "")
-            link_data = rich_text_object.get("text", {}).get("link", {})
-            link_url = link_data.get("url", None) if link_data is not None else None
-            if link_url:
-                paragraph_text += f'<a href="{link_url}">{text_content}</a>'
-            else:
-                paragraph_text += text_content
-        html_content += f"<p>{paragraph_text}</p>"
-
-    elif block_type == "embed":
-        embed_url = block.get("embed", {}).get("url")
-        if "twitter.com" in embed_url:
-            link_text = "Link to Tweet"
-        elif "youtube.com" in embed_url or "youtu.be" in embed_url:
-            link_text = "Link to Video"
-        else:
-            link_text = embed_url
-        html_content += f'<p><a href="{embed_url}">{link_text}</a></p>'
-
-    elif block_type == "image":
-        image_url = block.get("image", {}).get("file", {}).get("url")
-        html_content += f'<img src="{image_url}" alt="Image">'
-
-    elif block_type == "code":
-        code_content = block.get("code", {}).get("text", {}).get("content", "")
-        html_content += f"<pre><code>{code_content}</code></pre>"
-
-    elif block_type == "bookmark":
-        url = block.get("bookmark", {}).get("url", "")
-        title = block.get("bookmark", {}).get("title", {}).get("content", "")
-        html_content += f'<a href="{url}">{title}</a>'
-
-    elif block_type in ["bulleted_list_item", "numbered_list_item"]:
-        text_content = block.get(block_type, {}).get("text", {}).get("content", "")
-        list_tag = "ul" if block_type == "bulleted_list_item" else "ol"
-        html_content += f"<{list_tag}><li>{text_content}</li></{list_tag}>"
-
-    elif block_type == "to_do":
-        text_content = block.get("to_do", {}).get("text", {}).get("content", "")
-        html_content += f"<p>To Do: {text_content}</p>"
-
-    elif block_type == "toggle":
-        text_content = block.get("toggle", {}).get("text", {}).get("content", "")
-        html_content += f"<details><summary>{text_content}</summary></details>"
-
-    elif block_type in ["heading_1", "heading_2", "heading_3"]:
-        level = block_type[-1]
-        text_content = block.get(block_type, {}).get("text", {}).get("content", "")
-        html_content += f"<h{level}>{text_content}</h{level}>"
-
-    elif block_type == "quote":
-        text_content = block.get("quote", {}).get("text", {}).get("content", "")
-        html_content += f"<blockquote>{text_content}</blockquote>"
-
-    elif block_type == "divider":
-        html_content += "<hr>"
-
-    elif block_type == "callout":
-        text_content = block.get("callout", {}).get("text", {}).get("content", "")
-        html_content += f'<div style="background-color:#e0e0e0;">{text_content}</div>'
-
-    elif block_type == "link_preview":
-        url = block.get("link_preview", {}).get("url", "")
-        html_content += f'<a href="{url}">Link Preview</a>'
-
-    return html_content
-
 
 def send_newsletter_mjml(databaseID, headers):
     # Get today's date in a formatted string, e.g., "October 14, 2023"
@@ -354,6 +200,7 @@ def send_newsletter_mjml(databaseID, headers):
 
 
 def get_summary(all_html_content):
+    
     # Summarize the HTML content using OpenAI 3.5 Turbo
     # Get the OpenAI API key from the environment variables
     summary = ""
@@ -363,7 +210,7 @@ def get_summary(all_html_content):
 
     openai.api_key = openai_api_key
     try:
-        logging.info(all_html_content)
+        # logging.info(all_html_content)
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo-16k",
             temperature=0.0,
@@ -402,10 +249,11 @@ def build_mjml_structure(pages):
         mjml_structure += f'<mj-text font-size="20px"><h2>{title} - <a href="{notion_page_url}">Link to Page</a></h2></mj-text>'
 
         blocks = get_blocks_of_page(page.get("id"), headers)
-        if len(blocks) <= 1:
+        # if the page only has only a couple of  block we dont need to summarize anything and can convert it
+        if len(blocks) <= 20:
             for block in blocks:
                 # print(json.dumps(block, indent=4))
-                logging.info(json.dumps(block, indent=4))
+                logging.info(f"blocks {json.dumps(block, indent=4)}")
                 mjml = notion_block_to_mjml(block)
                 mjml_structure += f"""
                 <mj-section>
@@ -420,7 +268,16 @@ def build_mjml_structure(pages):
                 html = notion_block_to_html(block)
                 all_html_content += html
 
+            logging.info(f"all_html_content: {all_html_content}")
+
+            # Check if all_html_content is shorter than 6 words
+            # if len(all_html_content.split()) < 30:
+            #     summary = all_html_content
+            # else:
+            #     summary = get_summary(all_html_content)
+
             summary = get_summary(all_html_content)
+
 
             # Use the summarization in an MJML text tag
             mjml_structure += f"""
@@ -460,7 +317,7 @@ def send_newsletter(databaseID, headers):
     mjml_structure += build_mjml_structure(pages)
 
     mjml_structure += """
-        </mj-body>
+        
         <!-- Footer/Signature Section -->
         <mj-section background-color="#f0f0f0">
         <mj-column>

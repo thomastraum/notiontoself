@@ -39,8 +39,8 @@ def send_email_via_mailjet(mjml_structure, subject=""):
     # Perform API call
     response = requests.post(url, auth=auth, headers=headers, json=payload)
 
-    if env == "dev":
-        print(f"Email payload: {payload}")
+    # if env == "dev":
+        # print(f"Email payload: {payload}")
 
     if response.status_code == 200:
         print("Email sent successfully")
