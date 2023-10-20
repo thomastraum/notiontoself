@@ -17,5 +17,8 @@ EXPOSE 80
 # Define environment variable
 ENV NAME World
 
+ARG NOTION_DATABASE_ID
+ENV NOTION_DATABASE_ID=${NOTION_DATABASE_ID}
+
 # Run app.py when the container launches
 CMD ["python", "main.py"]

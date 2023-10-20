@@ -1,4 +1,3 @@
-
 def notion_block_to_mjml(block):
     block_type = block.get("type")
     mjml_content = ""
@@ -34,11 +33,10 @@ def notion_block_to_mjml(block):
         mjml_content += f'<mj-image src="{image_url}" alt="Image"></mj-image>'
 
     elif block_type == "code":
-        
         rich_text_objects = block.get("code", {}).get("rich_text", [])
         for rich_text_object in rich_text_objects:
             code_content = rich_text_object.get("plain_text", "")
- 
+
         # code_content = block.get("code", {}).get("rich_text").get("text", {}).get("content")
 
         mjml_content += f"<mj-raw><pre><code>{code_content}</code></pre></mj-raw>"
@@ -53,7 +51,10 @@ def notion_block_to_mjml(block):
         mjml_content += f"<mj-text>&bull; {text_content}</mj-text>"
 
     elif block_type == "to_do":
-        text_content = block.get("to_do", {}).get("text", {}).get("content", "")
+        rich_text_objects = block.get("quote", {}).get("rich_text", [])
+        for rich_text_object in rich_text_objects:
+            text_content = rich_text_object.get("plain_text", "")
+        # text_content = block.get("to_do", {}).get("text", {}).get("content", "")
         mjml_content += f"<mj-text>To Do: {text_content}</mj-text>"
 
     elif block_type == "toggle":
@@ -71,7 +72,7 @@ def notion_block_to_mjml(block):
         rich_text_objects = block.get("quote", {}).get("rich_text", [])
         for rich_text_object in rich_text_objects:
             text_content = rich_text_object.get("plain_text", "")
- 
+
         mjml_content += f'<mj-text font-style="italic">{text_content}</mj-text>'
 
     elif block_type == "divider":
@@ -96,24 +97,24 @@ def notion_block_to_html(block):
         rich_text_objects = block.get("paragraph", {}).get("rich_text", [])
         paragraph_text = ""
         for rich_text_object in rich_text_objects:
-            text_content = rich_text_object.get("plain_text", "")
+            text_content = html.escape(rich_text_object.get("plain_text", ""))
             link_data = rich_text_object.get("text", {}).get("link", {})
             link_url = link_data.get("url", None) if link_data is not None else None
             if link_url:
-                paragraph_text += f'<a href="{link_url}">{text_content}</a>'
+                paragraph_text += (
+                    f'<a href="{html.escape(link_url)}">{text_content}</a>'
+                )
             else:
                 paragraph_text += text_content
         html_content += f"<p>{paragraph_text}</p>"
-
     elif block_type == "embed":
-        embed_url = block.get("embed", {}).get("url")
+        embed_url = block.get("embed", {}).get("url", "")
+        link_text = "Link"
         if "twitter.com" in embed_url:
             link_text = "Link to Tweet"
         elif "youtube.com" in embed_url or "youtu.be" in embed_url:
             link_text = "Link to Video"
-        else:
-            link_text = embed_url
-        html_content += f'<p><a href="{embed_url}">{link_text}</a></p>'
+        html_content += f'<p><a href="{html.escape(embed_url)}">{link_text}</a></p>'
 
     elif block_type == "image":
         image_url = block.get("image", {}).get("file", {}).get("url")
@@ -129,12 +130,16 @@ def notion_block_to_html(block):
         html_content += f'<a href="{url}">{title}</a>'
 
     elif block_type in ["bulleted_list_item", "numbered_list_item"]:
-        text_content = block.get(block_type, {}).get("text", {}).get("content", "")
+        text_content = html.escape(
+            block.get(block_type, {}).get("text", {}).get("content", "")
+        )
         list_tag = "ul" if block_type == "bulleted_list_item" else "ol"
         html_content += f"<{list_tag}><li>{text_content}</li></{list_tag}>"
 
     elif block_type == "to_do":
-        text_content = block.get("to_do", {}).get("text", {}).get("content", "")
+        text_content = html.escape(
+            block.get("to_do", {}).get("text", {}).get("content", "")
+        )
         html_content += f"<p>To Do: {text_content}</p>"
 
     elif block_type == "toggle":
@@ -160,5 +165,7 @@ def notion_block_to_html(block):
     elif block_type == "link_preview":
         url = block.get("link_preview", {}).get("url", "")
         html_content += f'<a href="{url}">Link Preview</a>'
+    else:
+        html_content += f"<!-- Unrecognized block type: {block_type} -->"
 
     return html_content

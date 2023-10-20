@@ -11,84 +11,78 @@
         <mj-section background-color="#f0f0f0">
         <mj-column  width="600px">
             <mj-text align="center" font-size="24px" font-weight="bold">
-            <h1>Notion To Self, Edition October 18, 2023</h1>
+            <h1>Notion To Self, Edition October 20, 2023</h1>
             </mj-text>
         </mj-column>
         </mj-section>
-    <mj-text font-size="20px"><h2>Newsletter with affiliate links - <a href="https://www.notion.so/Newsletter-with-affiliate-links-d61765419eb248668ea182e09cbfe2ee">Link to Page</a></h2></mj-text>
+    <mj-text font-size="20px"><h2>The Framework to Find Traction for your Product - <a href="https://www.notion.so/The-Framework-to-Find-Traction-for-your-Product-9bf867b8e3af4037bbb72686e5bc9257">Link to Page</a></h2></mj-text>
+            <mj-section>
+            <mj-column width="600px">
+                <mj-text font-size="16px">The text discusses the importance of building an audience and community to support a product idea. It mentions a podcast interview with Sahil Lavingia, CEO of Gumroad, and recommends subscribing and sharing the newsletter. It also mentions a TikTok show called "Buying Time" as an example of modern brand building. The text emphasizes the shift from buying attention to earning attention and creating a community. It highlights the value of routine and engagement in building a successful product. The ACP Funnel (Audience, Community, Product) is presented as a framework for building a business. The text concludes with a call to action to follow the author on Instagram and subscribe to the newsletter.</mj-text>
+            </mj-column>
+            </mj-section>
+            <mj-text font-size="20px"><h2>dabit3/building-a-subgraph-workshop: In this workshop you'll learn how to build an NFT Subgraph using Zora's smart contract - <a href="https://www.notion.so/dabit3-building-a-subgraph-workshop-In-this-workshop-you-ll-learn-how-to-build-an-NFT-Subgraph-usin-64dbf228cedd48b3a10e8b727e29b73c">Link to Page</a></h2></mj-text>
+            <mj-section>
+            <mj-column width="600px">
+                <mj-text font-size="16px">Learn how to build a GraphQL API on top of the Ethereum blockchain to query data from Zora. Install Node.js, visit the Subgraph Studio, create a new subgraph, and initialize it with the Graph CLI. Define entity types in schema.graphql and generate entities locally. Configure the subgraph.yaml file and write mappings in src/mappings.ts. Build the subgraph and deploy it to the Studio. Query for data using the GraphQL playground. Publish the subgraph to the decentralized network. Check out tutorials and resources for more information.</mj-text>
+            </mj-column>
+            </mj-section>
+            <mj-text font-size="20px"><h2>Strapi - Open source Node.js Headless CMS 🚀 - <a href="https://www.notion.so/Strapi-Open-source-Node-js-Headless-CMS-b572f740078441a5ae65c1a40c4ad110">Link to Page</a></h2></mj-text>
                 <mj-section>
                 <mj-column width="600px">
-                    <mj-text font-size="16px"><mj-text>simple cool product newsletter with a few friends. </mj-text></mj-text>
+                    <mj-text font-size="16px"><mj-text font-size="20px"></mj-text></mj-text>
                 </mj-column>
                 </mj-section>
                 
                 <mj-section>
                 <mj-column width="600px">
-                    <mj-text font-size="16px"><mj-text>charge for affiliate links</mj-text></mj-text>
+                    <mj-text font-size="16px"><mj-text>Building self-hosted, customizable, and performant content API has never been easier.</mj-text></mj-text>
                 </mj-column>
                 </mj-section>
                 
                 <mj-section>
                 <mj-column width="600px">
-                    <mj-text font-size="16px"><mj-text>curation content versus selection</mj-text></mj-text>
+                    <mj-text font-size="16px"><mj-text font-size="20px"></mj-text></mj-text>
                 </mj-column>
                 </mj-section>
                 
                 <mj-section>
                 <mj-column width="600px">
-                    <mj-text font-size="16px"><mj-text></mj-text></mj-text>
-                </mj-column>
-                </mj-section>
-                <mj-text font-size="20px"><h2>speed - <a href="https://www.notion.so/speed-5f240bc9d517416b9bfd3da01fe3cbcc">Link to Page</a></h2></mj-text>
-                <mj-section>
-                <mj-column width="600px">
-                    <mj-text font-size="16px"><mj-text font-style="italic">They realized that if search is fast, you’re more likely to search. The reason is that it encourages you to try stuff, get feedback, and try again.</mj-text></mj-text>
+                    <mj-text font-size="16px"><mj-text>Make a flexible data structure in 2 minutes. Use our powerful features to customize your API.</mj-text></mj-text>
                 </mj-column>
                 </mj-section>
                 
                 <mj-section>
                 <mj-column width="600px">
-                    <mj-text font-size="16px"><mj-text></mj-text></mj-text>
+                    <mj-text font-size="16px"><mj-text>Connect your favorite databases, frontend frameworks, or static site generators. Choose where you want to host your websites. Integrate with your favorite tools, and work with the best of each world. No vendor lock-in.</mj-text></mj-text>
                 </mj-column>
                 </mj-section>
                 
                 <mj-section>
                 <mj-column width="600px">
-                    <mj-text font-size="16px"><mj-text>doing things fast encourgages you to do more. </mj-text></mj-text>
+                    <mj-text font-size="16px"><mj-text><a href="https://strapi.io/integrations/vuejs-cms">Vue.js is an open-source Model–view–viewmodel JavaScript framework for building user interfaces and single-page applications.</a></mj-text></mj-text>
                 </mj-column>
                 </mj-section>
                 
                 <mj-section>
                 <mj-column width="600px">
-                    <mj-text font-size="16px"><mj-text></mj-text></mj-text>
+                    <mj-text font-size="16px"><mj-text><a href="https://github.com/strapi/strapi-starter-angular-blog">Angular is a TypeScript-based open-source web application framework led by the Angular Team at Google and by a community of individuals and corporations.</a></mj-text></mj-text>
                 </mj-column>
                 </mj-section>
                 
                 <mj-section>
                 <mj-column width="600px">
-                    <mj-text font-size="16px"><mj-text font-style="italic">The general rule seems to be: systems which eat items quickly are fed more items. Slow systems starve.</mj-text></mj-text>
-                </mj-column>
-                </mj-section>
-                <mj-text font-size="20px"><h2>Step - <a href="https://www.notion.so/Step-411ead4b3e4a409c80ec3f989c358492">Link to Page</a></h2></mj-text>
-                <mj-section>
-                <mj-column width="600px">
-                    <mj-text font-size="16px"><mj-text>whats the first action</mj-text></mj-text>
+                    <mj-text font-size="16px"><mj-text><a href="https://strapi.io/">Authentication, database management and security have always been blockers to creating more extensive APIs. Since using Strapi I don’t have any of these concerns and am now free to develop features without worrying about repeating the basics.</a></mj-text></mj-text>
                 </mj-column>
                 </mj-section>
                 
                 <mj-section>
                 <mj-column width="600px">
-                    <mj-text font-size="16px"><mj-text font-style="italic">STEP</mj-text></mj-text>
+                    <mj-text font-size="16px"><mj-text><a href="https://strapi.io/">Just think of the code you would have to write just for a REST API with relationships, JWT authentication, roles, error handling and so much more. We do it all here from a GUI. There are pros and cons to using a CMS vs custom code, but Strapi is also easy to customize if needed. Awesome technology.</a></mj-text></mj-text>
                 </mj-column>
                 </mj-section>
                 
-                <mj-section>
-                <mj-column width="600px">
-                    <mj-text font-size="16px"><mj-text></mj-text></mj-text>
-                </mj-column>
-                </mj-section>
-                
-        </mj-body>
+        
         <!-- Footer/Signature Section -->
         <mj-section background-color="#f0f0f0">
         <mj-column>

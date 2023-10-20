@@ -1,5 +1,7 @@
 import os
 import requests
+from pprint import pprint
+import logging
 
 
 def send_email_via_mailjet(mjml_structure, subject=""):
@@ -39,8 +41,10 @@ def send_email_via_mailjet(mjml_structure, subject=""):
     # Perform API call
     response = requests.post(url, auth=auth, headers=headers, json=payload)
 
-    # if env == "dev":
+    if env == "dev":
         # print(f"Email payload: {payload}")
+        pprint(response.json())
+        logging.info(f"mailjet response: {response.json()}")
 
     if response.status_code == 200:
         print("Email sent successfully")
