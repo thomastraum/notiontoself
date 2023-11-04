@@ -1,3 +1,6 @@
+import html
+
+
 def notion_block_to_mjml(block):
     block_type = block.get("type")
     mjml_content = ""
