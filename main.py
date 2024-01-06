@@ -22,7 +22,12 @@ env = os.getenv("ENV")
 # Configure logging
 if env == "dev":
     # logging.basicConfig(level=logging.INFO)
-    logging.basicConfig(filename='app.log', filemode='a', format='%(asctime)s - %(message)s', level=logging.INFO)
+    logging.basicConfig(
+        filename="app.log",
+        filemode="a",
+        format="%(asctime)s - %(message)s",
+        level=logging.INFO,
+    )
 else:
     logging.basicConfig(level=logging.ERROR)
 
@@ -125,7 +130,6 @@ def get_blocks_of_page(page_id, headers):
     return blocks
 
 
-
 def send_newsletter_mjml(databaseID, headers):
     # Get today's date in a formatted string, e.g., "October 14, 2023"
     today_date = datetime.datetime.today().strftime("%B %d, %Y")
@@ -200,7 +204,6 @@ def send_newsletter_mjml(databaseID, headers):
 
 
 def get_summary(all_html_content):
-    
     # Summarize the HTML content using OpenAI 3.5 Turbo
     # Get the OpenAI API key from the environment variables
     summary = ""
@@ -277,7 +280,6 @@ def build_mjml_structure(pages):
             #     summary = get_summary(all_html_content)
 
             summary = get_summary(all_html_content)
-
 
             # Use the summarization in an MJML text tag
             mjml_structure += f"""
