@@ -21,12 +21,21 @@ env = os.getenv("ENV")
 
 # Configure logging
 if env == "dev":
-    # logging.basicConfig(level=logging.INFO)
+    # Create a formatter
+    formatter = logging.Formatter("%(asctime)s - %(message)s")
+
+    # File handler
+    file_handler = logging.FileHandler("app.log")
+    file_handler.setFormatter(formatter)
+
+    # Console handler
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(formatter)
+
+    # Configure the root logger
     logging.basicConfig(
-        filename="app.log",
-        filemode="a",
-        format="%(asctime)s - %(message)s",
         level=logging.INFO,
+        handlers=[file_handler, console_handler]
     )
 else:
     logging.basicConfig(level=logging.ERROR)
@@ -213,15 +222,15 @@ def get_summary(all_html_content):
 
     openai.api_key = openai_api_key
     try:
-        # logging.info(all_html_content)
+        logging.info(f"all_html_content: {all_html_content}")
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo-16k",
+            model=os.getenv("OPENAI_MODEL"),
             temperature=0.0,
             top_p=1,
             messages=[
                 {
                     "role": "system",
-                    "content": "I want you to act as a helpful assitant. Summarize the submitted texts in less than 60 words. do not describe the HTML tags. If the text submitted is short, simply return it with minimal formatting",
+                    "content": "I want you to act as a helpful assistant. Summarize the submitted mixed html text in less than 80 words. Do not describe the HTML tags. its about the content.",
                 },
                 {
                     "role": "user",
@@ -271,7 +280,7 @@ def build_mjml_structure(pages):
                 html = notion_block_to_html(block)
                 all_html_content += html
 
-            logging.info(f"all_html_content: {all_html_content}")
+            # logging.info(f"all_html_content: {all_html_content}")
 
             # Check if all_html_content is shorter than 6 words
             # if len(all_html_content.split()) < 30:
